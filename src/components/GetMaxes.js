@@ -50,6 +50,14 @@ class GetMaxes extends React.Component {
     });
   };
 
+  _showSquatMessage = (bool) => {
+    this.setState({ showSquatVal: bool });
+  };
+
+  _showDeadMessage = (bool) => {
+    this.setState({ showDeadVal: bool });
+  };
+
   handleBenchChange = (e) => {
     this.setState({ benchVal: parseInt(e.target.value) });
   };
@@ -132,6 +140,24 @@ class GetMaxes extends React.Component {
             value={this.state.squatVal}
             onChange={this.handleSquatChange}
           ></input>
+          <input
+            type="submit"
+            value="Get Working Weight"
+            className="u-full-width"
+            style={{ marginTop: "-10px" }}
+            onClick={this._showSquatMessage.bind(null, true)}
+          ></input>
+          {this.state.showSquatVal && (
+            <div>
+              Squat Set 1 Weight : {this.calcTopSet(this.state.squatVal)} for
+              8-12 reps
+              <div>
+                Squat Set 2 Weight :{" "}
+                {this.backOffSet(this.calcTopSet(this.state.squatVal))} for 8-12
+                reps
+              </div>
+            </div>
+          )}
         </form>
 
         <form onSubmit={this.onDeadSubmit}>
@@ -150,6 +176,19 @@ class GetMaxes extends React.Component {
             value={this.state.deadVal}
             onChange={this.handleDeadChange}
           ></input>
+          <input
+            type="submit"
+            value="Get Working Weight"
+            className="u-full-width"
+            style={{ marginTop: "-10px" }}
+            onClick={this._showDeadMessage.bind(null, true)}
+          ></input>
+          {this.state.showDeadVal && (
+            <div>
+              Deadlift Set Weight : {this.calcTopSet(this.state.deadVal)} for
+              8-12 reps
+            </div>
+          )}
         </form>
       </div>
     );
