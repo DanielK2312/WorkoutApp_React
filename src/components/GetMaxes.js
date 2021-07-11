@@ -1,7 +1,54 @@
 import React from "react";
 
 class GetMaxes extends React.Component {
-  state = { benchVal: "", squatVal: "", deadVal: "" };
+  state = {
+    benchVal: "",
+    squatVal: "",
+    deadVal: "",
+    showBenchVal: false,
+    showSquatVal: false,
+    showDeadVal: false,
+  };
+
+  /**
+   *
+   * @param {The 1 rep max the user inputs to calculate the top set weight} max
+   * @returns Number to be displayed after pressing the get working weight button
+   */
+  calcTopSet = (max) => {
+    return Math.floor(max * 0.8);
+  };
+
+  /**
+   *
+   * @param {Value calculated from calcTopSet method} topSetWeight
+   * @returns Number to display the weight to be used in the second set
+   */
+  backOffSet = (topSetWeight) => {
+    return Math.floor(topSetWeight * 0.7);
+  };
+
+  // causes a user to be unable to press enter to enter 1rm for Bench
+  // #TODO cause some sort of error to user if they press enter
+  /**
+   * Prevents user from pressing enter to submit form
+   * @param {check event} e
+   */
+  checkKeyDown = (e) => {
+    if (e.code === "Enter") {
+      e.preventDefault();
+    }
+  };
+
+  /**
+   * Shows benchVal state content after button is pressed
+   * @param {set whether or not message be displayed} bool
+   */
+  _showBenchMessage = (bool) => {
+    this.setState({
+      showBenchVal: bool,
+    });
+  };
 
   handleBenchChange = (e) => {
     this.setState({ benchVal: parseInt(e.target.value) });
@@ -17,23 +64,23 @@ class GetMaxes extends React.Component {
 
   onBenchSubmit = (e) => {
     e.preventDefault();
-    this.props.benchChange(this.state);
   };
 
   onSquatSubmit = (e) => {
     e.preventDefault();
-    this.props.squatChange(this.state);
   };
 
   onDeadSubmit = (e) => {
     e.preventDefault();
-    this.props.deadChange(this.state);
   };
 
-  render() {
+  renderContent() {
     return (
       <div className="ui container">
-        <form onSubmit={this.onBenchSubmit}>
+        <form
+          onSubmit={this.onBenchSubmit}
+          onKeyDown={(e) => this.checkKeyDown(e)}
+        >
           <label
             style={{
               border: "2px solid black",
@@ -49,6 +96,24 @@ class GetMaxes extends React.Component {
             value={this.state.benchVal}
             onChange={this.handleBenchChange}
           ></input>
+          <input
+            type="submit"
+            value="Get Working Weight"
+            className="u-full-width"
+            style={{ marginTop: "-10px" }}
+            onClick={this._showBenchMessage.bind(null, true)}
+          ></input>
+          {this.state.showBenchVal && (
+            <div>
+              Bench Press Set 1 Weight : {this.calcTopSet(this.state.benchVal)}{" "}
+              for 8-12 reps
+              <div>
+                Bench Press Set 2 Weight :{" "}
+                {this.backOffSet(this.calcTopSet(this.state.benchVal))} for 8-12
+                reps
+              </div>
+            </div>
+          )}
         </form>
 
         <form onSubmit={this.onSquatSubmit}>
@@ -88,6 +153,10 @@ class GetMaxes extends React.Component {
         </form>
       </div>
     );
+  }
+
+  render() {
+    return <div>{this.renderContent()}</div>;
   }
 }
 

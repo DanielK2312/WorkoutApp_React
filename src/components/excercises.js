@@ -1,7 +1,7 @@
 export const excerciseData = [
   {
     body_part: "Chest",
-    excercise: "Incline Smith Machine Press",
+    excercise: "Bench Press",
     sets: "Two hard sets to failure",
   },
   {

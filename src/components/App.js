@@ -5,40 +5,11 @@ import GetQuote from "./GetQuote";
 import GetWorkout from "./GetWorkout";
 
 class App extends React.Component {
-  state = { workoutChoice: "", benchWeight: 0, squatMax: 0, deadMax: 0 };
-
-  // calculate the top set of 8-12 reps based off what the user inputs
-  calculateTopSet = (oneRM) => {
-    return Math.floor(oneRM * 0.8);
-  };
-
-  // calculates 70% of the top set weight for the second back off set
-  calculateBackOffSet = (calculateTopSetValue) => {
-    return Math.floor(calculateTopSetValue * 0.7);
-  };
-
-  // get bench 1rm input form child component to set to this parent state
-  getBenchValue = (data) => {
-    let x = data.benchVal;
-    x = this.calculateTopSet(x);
-    this.setState({ benchWeight: x }, () => {
-      console.log(this.state);
-    });
-  };
-
-  getSquatValue = (data) => {
-    console.log(data.squatVal);
-  };
-
-  getDeadValue = (data) => {
-    console.log(data.deadVal);
-  };
+  state = { workoutChoice: "" };
 
   getWorkoutValue = (data) => {
     // retrive the user value inputted in the form submit box
-    this.setState({ workoutChoice: data.text }, () => {
-      console.log(this.state.workoutChoice);
-    });
+    this.setState({ workoutChoice: data.text });
   };
 
   // clears out text field

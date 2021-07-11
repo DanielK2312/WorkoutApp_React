@@ -27,14 +27,13 @@ class GetWorkout extends React.Component {
   renderContent() {
     if (this.props.workoutChoice === "Chest") {
       return (
-        <div>
+        <div className="ui container">
           {/* {first call getChestExcercises which returns an array that can be mapped through} */}
           {this.getChestExcercises(excerciseData).map((excercise) => (
             // assign unique key to div
-            <div key={excercise.excercise}>
+            <div key={excercise.excercise} style={{ marginTop: "10px" }}>
               {/* #TODO styling on these displays */}
-              {excercise.body_part} {excercise.excercise} {excercise.sets}{" "}
-              {this.props.benchWeight}
+              Excercise: {excercise.excercise} || Rep Scheme: {excercise.sets}
             </div>
           ))}
         </div>
