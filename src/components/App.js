@@ -12,14 +12,12 @@ class App extends React.Component {
     this.setState({ workoutChoice: data.text });
   };
 
-  // clears out text field
-  // #TODO do same to 1RM inputs once the state is actually set on those
-  // may not work cause callbacks...
-  handleClearingChange() {
-    let empty = "";
-    this.setState({ workoutChoice: empty }, console.log("complete"));
-    // this.setState({ benchWeight: empty });
-  }
+  /**
+   * Refresh page to get a new workout
+   */
+  refreshPage = () => {
+    window.location.reload();
+  };
 
   render() {
     return (
@@ -42,12 +40,14 @@ class App extends React.Component {
           <TextInput onChange={this.getWorkoutValue} />
           <button
             className="ui container"
-            onClick={this.handleClearingChange}
+            onClick={this.refreshPage}
             style={{ marginTop: "-35px" }}
           >
             Reset
           </button>
         </div>
+
+        <GetQuote workoutChoice={this.state.workoutChoice} />
 
         <GetWorkout
           workoutChoice={this.state.workoutChoice}

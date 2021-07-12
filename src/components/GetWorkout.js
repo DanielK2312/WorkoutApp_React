@@ -23,6 +23,34 @@ class GetWorkout extends React.Component {
     return chestArr;
   };
 
+  getBackExcercises = (excercise) => {
+    const backArr = [];
+
+    excercise.forEach((element) => {
+      if (element.body_part === "Back") {
+        // push entire element so body part, excercise and sets are all extracted
+        return backArr.push(element);
+      }
+    });
+
+    // return array to be mapped through
+    return backArr;
+  };
+
+  getLegExcercises = (excercise) => {
+    const legArr = [];
+
+    excercise.forEach((element) => {
+      if (element.body_part === "Legs") {
+        // push entire element so body part, excercise and sets are all extracted
+        return legArr.push(element);
+      }
+    });
+
+    // return array to be mapped through
+    return legArr;
+  };
+
   // helper function to render(), handles getting text input component and displaying workout based off that
   renderContent() {
     if (this.props.workoutChoice === "Chest") {
@@ -38,8 +66,34 @@ class GetWorkout extends React.Component {
           ))}
         </div>
       );
+    } else if (this.props.workoutChoice === "Back") {
+      return (
+        <div className="ui container">
+          {/* {first call getChestExcercises which returns an array that can be mapped through} */}
+          {this.getBackExcercises(excerciseData).map((excercise) => (
+            // assign unique key to div
+            <div key={excercise.excercise} style={{ marginTop: "10px" }}>
+              {/* #TODO styling on these displays */}
+              Excercise: {excercise.excercise} || Rep Scheme: {excercise.sets}
+            </div>
+          ))}
+        </div>
+      );
+    } else if (this.props.workoutChoice === "Legs") {
+      return (
+        <div className="ui container">
+          {/* {first call getChestExcercises which returns an array that can be mapped through} */}
+          {this.getLegExcercises(excerciseData).map((excercise) => (
+            // assign unique key to div
+            <div key={excercise.excercise} style={{ marginTop: "10px" }}>
+              {/* #TODO styling on these displays */}
+              Excercise: {excercise.excercise} || Rep Scheme: {excercise.sets}
+            </div>
+          ))}
+        </div>
+      );
     } else {
-      return <div>Loading...</div>;
+      return <div></div>;
     }
   }
 
